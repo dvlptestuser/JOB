@@ -2,6 +2,7 @@ package com.pk.assistant;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -16,13 +17,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class EmailController {
 
-	@RequestMapping(value = "/sendemail")
+	@GetMapping("/sendemail")
 	public String sendEmail() {
 		try {
 			sendmail();
@@ -33,6 +36,11 @@ public class EmailController {
 		return "Email sent successfully";
 	}
 
+	   @RequestMapping("/")
+	    public String home(Map<String, Object> model) {
+	        model.put("message", "HowToDoInJava Reader !!");
+	        return "homepage";
+	    }
 	private void sendmail() throws AddressException, MessagingException, IOException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -46,14 +54,14 @@ public class EmailController {
 			}
 		});
 		Message msg = new MimeMessage(session);
-		
-		String from="John Smith<dvlptestapi@gmail.com>";
+
+		String from = "John Smith<dvlptestapi@gmail.com>";
 		msg.setFrom(new InternetAddress(from, false));
 
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("ptechnophile@gmail.com"));
 		msg.setSubject("Tutorials point email");
 		msg.setContent("Tutorials point email", "text/html");
-		
+
 		msg.setSentDate(new Date());
 
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
