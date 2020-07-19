@@ -19,8 +19,8 @@ import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class EmailController {
@@ -36,11 +36,18 @@ public class EmailController {
 		return "Email sent successfully";
 	}
 
-	   @RequestMapping("/")
-	    public String home(Map<String, Object> model) {
-	        model.put("message", "HowToDoInJava Reader !!");
-	        return "homepage";
-	    }
+	@GetMapping("/")
+	public String loginPage(Map<String, Object> model) {
+
+		return "login";
+	}
+
+	@RequestMapping("/home")
+	public String home(@ModelAttribute UserDetails login) {
+		System.out.println("" + login.getUsername());
+		return "homepage";
+	}
+
 	private void sendmail() throws AddressException, MessagingException, IOException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
