@@ -68,7 +68,7 @@ public class EmailController {
 	}
 
 	
-	@PostMapping("/sendMail")
+	@GetMapping("/sendMail")
 	public String mailSender(@ModelAttribute UserDetails userDetails,Model model) throws AddressException, MessagingException, IOException {
 		sendmail();
 		return "result";
