@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +66,9 @@
 							id="password"> <span class="focus-input100"
 							data-placeholder="Password"></span>
 					</div>
-
+					<c:if test="${not empty msg}">
+					<label style="color: red;">Invalid credentials</label>
+					</c:if>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>

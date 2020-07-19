@@ -30,24 +30,36 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
+			<form class="contact100-form validate-form" action="/send" method="post" id="applicationForm">
 				<span class="contact100-form-title">
-					Say Hello!
+					Hi There!
 				</span>
 
-				<div class="wrap-input100 validate-input" data-validate="Name is required">
-					<span class="label-input100">Your Name</span>
-					<input class="input100" type="text" name="name" placeholder="Enter your name">
+				<div class="wrap-input100 validate-input" data-validate="Organization's name is required">
+					<span class="label-input100">What is the name of an organization?</span>
+					<input class="input100" type="text" name="orgName" placeholder="Organization name is..">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate="Person's name is required">
+					<span class="label-input100">To whom you're sending this application?</span>
+					<input class="input100" type="text" name="reciversName" placeholder="Receiver's name is..">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-					<span class="label-input100">Email</span>
-					<input class="input100" type="text" name="email" placeholder="Enter your email addess">
+					<span class="label-input100">What's his Email ID</span>
+					<input class="input100" type="text" name="receiversEmail" placeholder="Receivers email id is..">
 					<span class="focus-input100"></span>
 				</div>
 
-				<div class="wrap-input100 input100-select">
+				<div class="wrap-input100 validate-input" data-validate="Designation is required">
+					<span class="label-input100">For which designation you're applying?</span>
+					<input class="input100" type="text" name="designation" placeholder="Designation is here..">
+					<span class="focus-input100"></span>
+				</div>
+
+			<!-- 	<div class="wrap-input100 input100-select">
 					<span class="label-input100">Needed Services</span>
 					<div>
 						<select class="selection-2" name="service">
@@ -72,20 +84,20 @@
 						</select>
 					</div>
 					<span class="focus-input100"></span>
-				</div>
+				</div> -->
 
-				<div class="wrap-input100 validate-input" data-validate = "Message is required">
-					<span class="label-input100">Message</span>
-					<textarea class="input100" name="message" placeholder="Your message here..."></textarea>
+				<div class="wrap-input100" >
+					<span class="label-input100">Would you like to modify default subject line? If yes, then please specify</span>
+					<input type="text" class="input100" name="customSubject" placeholder="Custom subject line goes here">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="container-contact100-form-btn">
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
-						<button class="contact100-form-btn">
+						<button class="contact100-form-btn" id="sendBtn">
 							<span>
-								Submit
+								Let's process..!
 								<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 							</span>
 						</button>
@@ -99,6 +111,14 @@
 
 	<div id="dropDownSelect1"></div>
 
+
+<script src="vendor/jquery/jquery-3.2.1.min.js">
+		$(document).ready(function() {
+			$("#sendBtn").click(function() {
+				$("#applicationForm").submit();
+			});
+		});
+	</script>
 <!--===============================================================================================-->
 	<script src="home/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
