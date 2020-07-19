@@ -52,7 +52,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input"
-						data-validate="Valid email is: a@b.c">
+						data-validate="Valid email is: a@b.com">
 						<input class="input100" type="text" name="username" id="username">
 						<span class="focus-input100" data-placeholder="Email"></span>
 					</div>
