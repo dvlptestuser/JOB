@@ -41,7 +41,8 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form" action="/home">
+				<form class="login100-form validate-form" action="/home"
+					id="loginForm">
 					<span class="login100-form-title p-b-26"> Welcome </span> <span
 						class="login100-form-title p-b-48">
 						<button class="btn btn-default btn-lg">
@@ -67,7 +68,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">Login</button>
+							<button class="login100-form-btn" id="loginBtn">Login</button>
 
 						</div>
 					</div>
@@ -82,7 +83,13 @@
 	<div id="dropDownSelect1"></div>
 
 	<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/jquery/jquery-3.2.1.min.js">
+		$(document).ready(function() {
+			$("#loginBtn").click(function() {
+				$("#loginForm").submit();
+			});
+		});
+	</script>
 	<!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->
