@@ -67,6 +67,13 @@ public class EmailController {
 		return "result";
 	}
 
+	
+	@PostMapping("/sendMail")
+	public String mailSender(@ModelAttribute UserDetails userDetails,Model model) throws AddressException, MessagingException, IOException {
+		sendmail();
+		return "result";
+	}
+
 	private void sendmail() throws AddressException, MessagingException, IOException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
