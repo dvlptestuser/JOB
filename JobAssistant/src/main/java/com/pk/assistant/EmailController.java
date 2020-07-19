@@ -40,7 +40,7 @@ public class EmailController {
 		return "login";
 	}
 
-	@RequestMapping("/home")
+	@PostMapping("/home")
 	public String home(@ModelAttribute UserDetails login, Model model) {
 		System.out.println("" + login.getUsername());
 
@@ -55,13 +55,16 @@ public class EmailController {
 	}
 	
 	@PostMapping("/send")
-	public String sendApplication(@ModelAttribute UserDetails userDetails) {
+	public String sendApplication(@ModelAttribute UserDetails userDetails,Model model) {
 		try {
 			sendEmailNow(userDetails);
+			model.addAttribute("result","Your application is on the way.. We wish you all the best!");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("failure","We regret as we failed to send your application. Please try after sometime.If still problem persists, please write us @dvlptestapi@gmail.com");
 		}
-		return "homepage";
+		return "result";
 	}
 
 	private void sendmail() throws AddressException, MessagingException, IOException {
