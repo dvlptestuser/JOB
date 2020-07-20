@@ -2,14 +2,13 @@ package com.pk.assistant;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,17 +27,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import ch.qos.logback.core.util.FileUtil;
 
 @Controller
 public class EmailController {
@@ -176,9 +169,11 @@ public class EmailController {
 
 			try {
 
-				File resumeFile = new File(getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf").toExternalForm());
+				//File resumeFile = new File(getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf").toExternalForm());
 
-				
+				Path temp = Files.createTempFile("temp", ".pdf");
+				Files.copy(getClass().getClassLoader().getResourceAsStream("/Prakash_Kansurkar_4+.pdf"), temp, StandardCopyOption.REPLACE_EXISTING);
+				//FileInputStream input = new FileInputStream(temp.toFile());
 			
 				  String emailBody = getEmailBodyContent();
 				  emailBody=emailBody.replaceAll("#DATE#", todayDate);
@@ -186,7 +181,7 @@ public class EmailController {
 				  emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
 				  emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				 
-				attachmentPart.attachFile(resumeFile);
+				attachmentPart.attachFile(temp.toFile());
 				textPart.setContent(emailBody, "text/html");
 				multipart.addBodyPart(textPart);
 				multipart.addBodyPart(attachmentPart);//
