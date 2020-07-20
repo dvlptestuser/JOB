@@ -1,9 +1,11 @@
 package com.pk.assistant;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -176,8 +178,27 @@ public class EmailController {
 				
 				//String path = "/" + EmailController.class.getProtectionDomain().getCodeSource().getLocation().getPath()  + "Prakash_Kansurkar_4+.pdf";
 
-			
-		        File resumeFile = new File("");
+				ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+		        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+		        for(URL url: urls){
+		        	System.out.println(url.getFile());
+		        }
+				
+		        InputStream inputStream = getClass().getResourceAsStream("CoverLetter_Prakash_Kansurkar.html");
+		        
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+		        StringBuilder out = new StringBuilder();
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            out.append(line);   // add everything to StringBuilder 
+		          
+		            System.out.println("========="+line);
+
+		        }
+		        
+		        
 				/*File coverLetterFile = new File(classLoader.getResource("CoverLetter_Prakash_Kansurkar.html").getFile());
 
 				String emailBody = readFileAsString(coverLetterFile);
@@ -186,12 +207,12 @@ public class EmailController {
 				emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
 				emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				   */
-				attachmentPart.attachFile(resumeFile);
+				//attachmentPart.attachFile(resumeFile);
 				//textPart.setContent(emailBody, "text/html");
-				textPart.setContent("Hi", "text/html; charset=utf-8");
+				//textPart.setContent("Hi", "text/html; charset=utf-8");
 
-				multipart.addBodyPart(textPart);
-				multipart.addBodyPart(attachmentPart);
+				//multipart.addBodyPart(textPart);
+				//multipart.addBodyPart(attachmentPart);//
 
 			} catch (IOException e) {
 
@@ -202,15 +223,7 @@ public class EmailController {
 			message.setContent(multipart);
 
 			
-			System.out.println("sending.*.."+userDetails);
-			ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-	        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-	        for(URL url: urls){
-	        	System.out.println("**/*"+url.getFile());
-	        }
-			
+			System.out.println("sending..."+userDetails);
 			// Send message
 			Transport.send(message);
 			System.out.println("Sent message successfully....");
