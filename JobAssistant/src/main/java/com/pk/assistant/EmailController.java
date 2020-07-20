@@ -29,6 +29,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -186,7 +188,18 @@ public class EmailController {
 		        	System.out.println(url.getFile());
 		        }
 				
-		        InputStream inputStream = getClass().getResourceAsStream("CoverLetter_Prakash_Kansurkar.html");
+		        
+		        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+		        // Ant-style path matching
+		        Resource[] resources = resolver.getResources("/myconfig/**");
+
+		        for (Resource resource : resources) {
+		           System.out.println(resource.getDescription());
+		        }
+		        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/CoverLetter_Prakash_Kansurkar.html");
+		        
+		        System.out.println("-------------"+inputStream);
 		        
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		        StringBuilder out = new StringBuilder();
