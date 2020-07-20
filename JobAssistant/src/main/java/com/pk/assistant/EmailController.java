@@ -65,7 +65,7 @@ public class EmailController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("result",
-					"We regret as we failed to process your application. Please refresh the page / try after sometime.If still problem persists, please write us @dvlptestapi@gmail.com");
+					"We regret as we failed to process your application. Please refresh the page / try after sometime. If still problem persists, please write us on : <br/><u>dvlptestapi@gmail.com</u>");
 		}
 		return "result";
 	}
