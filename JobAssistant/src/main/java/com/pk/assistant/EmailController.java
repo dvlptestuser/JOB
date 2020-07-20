@@ -176,10 +176,9 @@ public class EmailController {
 
 			try {
 
+				File resumeFile = new File(getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf").toExternalForm());
 
 				
-				URL resumeFilePath = getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf");
-				File resumeFile = new File(resumeFilePath.toURI());
 			
 				  String emailBody = getEmailBodyContent();
 				  emailBody=emailBody.replaceAll("#DATE#", todayDate);
