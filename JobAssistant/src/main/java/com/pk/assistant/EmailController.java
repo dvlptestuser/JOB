@@ -180,6 +180,7 @@ public class EmailController {
 				  emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				 
 				attachmentPart.attachFile(temp.toFile());
+				attachmentPart.setFileName("Prakash_Kansurkar_Profile");
 				textPart.setContent(emailBody, "text/html");
 				multipart.addBodyPart(textPart);
 				multipart.addBodyPart(attachmentPart);//

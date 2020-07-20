@@ -48,11 +48,8 @@
 					<span class="login100-form-title p-b-26"> ${result }</span> <span
 						class="login100-form-title p-b-48">
 						<button class="btn btn-default btn-lg" id="goBackBtn">
-						
-							<p><i class="zmdi zmdi-directions-bike animated infinite fadeInLeft zmdi-hc-fw"></i> Click here to go back (:</p>
- 
+							<p><u>Click here to start over</u> <i class="zmdi zmdi-directions-bike animated infinite fadeInLeft zmdi-hc-fw"></i> </p>
 						</button>
-							<p><i class="zmdi zmdi-directions-bike animated infinite fadeInRight zmdi-hc-fw"></i> Click here to go back (:</p>
 						
 					</span>
 				</form>
