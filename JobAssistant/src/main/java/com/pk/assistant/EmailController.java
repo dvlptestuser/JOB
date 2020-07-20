@@ -3,7 +3,6 @@ package com.pk.assistant;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,12 +27,13 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class EmailController {
 
 
+	
+	public String resumeFile;
 	@GetMapping("/")
 	public String loginPage(Map<String, Object> model) {
 
@@ -104,7 +104,7 @@ public class EmailController {
 		multipart.addBodyPart(messageBodyPart);
 		MimeBodyPart attachPart = new MimeBodyPart();
 
-		attachPart.attachFile("C:\\Users\\Technophile\\Downloads\\android.png");
+		
 		multipart.addBodyPart(attachPart);
 		msg.setContent(multipart);
 		Transport.send(msg);
@@ -166,8 +166,10 @@ public class EmailController {
 			
 			
 			try {
+				
+			
+				
 
-				File resumeFile = ResourceUtils.getFile("classpath:Prakash_Kansurkar_4+.pdf");
 				File coverLetterFile = ResourceUtils.getFile("classpath:CoverLetter_Prakash_Kansurkar.html");
 
 				String emailBody = readFileAsString(coverLetterFile);
@@ -176,12 +178,12 @@ public class EmailController {
 				emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
 				emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				   
-				attachmentPart.attachFile(resumeFile);
+				//attachmentPart.attachFile(resumeFile);
 				//textPart.setContent(emailBody, "text/html");
 				textPart.setContent(emailBody, "text/html; charset=utf-8");
 
 				multipart.addBodyPart(textPart);
-				multipart.addBodyPart(attachmentPart);
+				//multipart.addBodyPart(attachmentPart);
 
 			} catch (IOException e) {
 
