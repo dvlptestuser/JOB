@@ -192,7 +192,7 @@ public class EmailController {
 		        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
 		        // Ant-style path matching
-		        Resource[] resources = resolver.getResources("/myconfig/**");
+		        Resource[] resources = resolver.getResources("/**");
 
 		        for (Resource resource : resources) {
 		           System.out.println(resource.getDescription());
