@@ -40,11 +40,29 @@
 </head>
 <body>
 
-	<label> <c:out value = "${result}"/></label>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" action="/home"
+					id="loginForm" method="post">
+					<span class="login100-form-title p-b-26"> ${result }</span> <span
+						class="login100-form-title p-b-48">
+						<button class="btn btn-default btn-lg">
+							<i class="zmdi zmdi-pin animated infinite wobble zmdi-hc-fw"></i> 
+
+						</button>
+					</span>
+				</form>
+			</div>
+		</div>
+	</div>
+
 
 
 	<!--===============================================================================================-->
-
+	<script src="vendor/jquery/jquery-3.2.1.min.js">
+	
+	</script>
 	<!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->

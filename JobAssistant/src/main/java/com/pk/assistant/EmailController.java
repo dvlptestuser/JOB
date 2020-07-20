@@ -1,8 +1,6 @@
 package com.pk.assistant;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,7 +64,7 @@ public class EmailController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("failure",
+			model.addAttribute("result",
 					"We regret as we failed to send your application. Please try after sometime.If still problem persists, please write us @dvlptestapi@gmail.com");
 		}
 		return "result";
@@ -175,14 +173,12 @@ public class EmailController {
 				Files.copy(getClass().getClassLoader().getResourceAsStream("/Prakash_Kansurkar_4+.pdf"), temp, StandardCopyOption.REPLACE_EXISTING);
 				//FileInputStream input = new FileInputStream(temp.toFile());
 			
-				System.out.println("Temp FILE Created");
 				  String emailBody = getEmailBodyContent();
 				  emailBody=emailBody.replaceAll("#DATE#", todayDate);
 				  emailBody=emailBody.replaceAll("#ORGNAME#", userDetails.getOrgName());
 				  emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
 				  emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				 
-				  System.out.println("temp.toFile():==>"+temp.toFile());
 				attachmentPart.attachFile(temp.toFile());
 				textPart.setContent(emailBody, "text/html");
 				multipart.addBodyPart(textPart);
@@ -210,7 +206,7 @@ public class EmailController {
 
 
 	private String getEmailBodyContent() throws IOException {
-		String emailContent = null;
+		String emailContent = "";
 		InputStream inputStream = getClass().getClassLoader()
 				.getResourceAsStream("/CoverLetter_Prakash_Kansurkar.html");
 		
