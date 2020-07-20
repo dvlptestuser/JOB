@@ -176,14 +176,7 @@ public class EmailController {
 				
 				//String path = "/" + EmailController.class.getProtectionDomain().getCodeSource().getLocation().getPath()  + "Prakash_Kansurkar_4+.pdf";
 
-				ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-		        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-		        for(URL url: urls){
-		        	System.out.println(url.getFile());
-		        }
-				
+			
 		        File resumeFile = new File("");
 				/*File coverLetterFile = new File(classLoader.getResource("CoverLetter_Prakash_Kansurkar.html").getFile());
 
@@ -209,7 +202,15 @@ public class EmailController {
 			message.setContent(multipart);
 
 			
-			System.out.println("sending..."+userDetails);
+			System.out.println("sending.*.."+userDetails);
+			ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+	        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+	        for(URL url: urls){
+	        	System.out.println(url.getFile());
+	        }
+			
 			// Send message
 			Transport.send(message);
 			System.out.println("Sent message successfully....");
