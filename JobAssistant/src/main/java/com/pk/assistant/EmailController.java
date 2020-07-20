@@ -170,7 +170,7 @@ public class EmailController {
 			
 				
 
-				File coverLetterFile = ResourceUtils.getFile("classpath:CoverLetter_Prakash_Kansurkar.html");
+				/*File coverLetterFile = ResourceUtils.getFile("classpath:CoverLetter_Prakash_Kansurkar.html");
 
 				String emailBody = readFileAsString(coverLetterFile);
 				emailBody=emailBody.replaceAll("#DATE#", todayDate);
@@ -179,13 +179,13 @@ public class EmailController {
 				emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				   
 				//attachmentPart.attachFile(resumeFile);
-				//textPart.setContent(emailBody, "text/html");
-				textPart.setContent(emailBody, "text/html; charset=utf-8");
+				//textPart.setContent(emailBody, "text/html");*/
+				textPart.setContent("Hi", "text/html; charset=utf-8");
 
 				multipart.addBodyPart(textPart);
 				//multipart.addBodyPart(attachmentPart);
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 
 				e.printStackTrace();
 
