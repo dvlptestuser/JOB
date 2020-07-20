@@ -187,6 +187,7 @@ public class EmailController {
 			} catch (IOException e) {
 
 				e.printStackTrace();
+				throw e;
 
 			}
 
@@ -198,6 +199,8 @@ public class EmailController {
 			System.out.println("Sent message successfully....");
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
+			throw mex;
+			
 		}
 
 		return true;
