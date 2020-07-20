@@ -28,6 +28,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -37,12 +38,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ch.qos.logback.core.util.FileUtil;
+
 @Controller
 public class EmailController {
 
-
-	
 	public String resumeFile;
+
 	@GetMapping("/")
 	public String loginPage(Map<String, Object> model) {
 
@@ -54,7 +56,7 @@ public class EmailController {
 		System.out.println("" + login.getUsername());
 
 		if ("Prakash".equalsIgnoreCase(login.getUsername()) && "Pass@1234".equals(login.getPassword())) {
-			
+
 			return "homepage";
 		} else {
 			model.addAttribute("msg", "Invalid credentials");
@@ -62,23 +64,24 @@ public class EmailController {
 		}
 
 	}
-	
+
 	@PostMapping("/send")
-	public String sendApplication(@ModelAttribute UserDetails userDetails,Model model) {
+	public String sendApplication(@ModelAttribute UserDetails userDetails, Model model) {
 		try {
 			sendEmailNow(userDetails);
-			model.addAttribute("result","Your application is on the way.. We wish you all the best!");
-			
+			model.addAttribute("result", "Your application is on the way.. We wish you all the best!");
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("failure","We regret as we failed to send your application. Please try after sometime.If still problem persists, please write us @dvlptestapi@gmail.com");
+			model.addAttribute("failure",
+					"We regret as we failed to send your application. Please try after sometime.If still problem persists, please write us @dvlptestapi@gmail.com");
 		}
 		return "result";
 	}
 
-	
 	@GetMapping("/sendMail")
-	public String mailSender(@ModelAttribute UserDetails userDetails,Model model) throws AddressException, MessagingException, IOException {
+	public String mailSender(@ModelAttribute UserDetails userDetails, Model model)
+			throws AddressException, MessagingException, IOException {
 		sendmail();
 		return "result";
 	}
@@ -113,19 +116,18 @@ public class EmailController {
 		multipart.addBodyPart(messageBodyPart);
 		MimeBodyPart attachPart = new MimeBodyPart();
 
-		
 		multipart.addBodyPart(attachPart);
 		msg.setContent(multipart);
 		Transport.send(msg);
 	}
-	
+
 	private boolean sendEmailNow(UserDetails userDetails) throws Exception {
 
-		String PATTERN="yyyy-MM-dd";
-		SimpleDateFormat dateFormat=new SimpleDateFormat();
+		String PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat dateFormat = new SimpleDateFormat();
 		dateFormat.applyPattern(PATTERN);
-		String todayDate=dateFormat.format(Calendar.getInstance().getTime());
-		
+		String todayDate = dateFormat.format(Calendar.getInstance().getTime());
+
 		// Recipient's email ID needs to be mentioned.
 		String to = userDetails.getReceiversEmail();
 		// Sender's email ID needs to be mentioned
@@ -158,11 +160,11 @@ public class EmailController {
 			// Set To: header field of the header.
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
-			
-			String subject= "Application for "+userDetails.getDesignation() +" @ " + userDetails.getOrgName();
+			String subject = "Application for " + userDetails.getDesignation() + " @ " + userDetails.getOrgName();
 			// Set Subject: header field
-			if(userDetails.getCustomSubject()!=null && !"".equalsIgnoreCase(userDetails.getCustomSubject()) && !"".equalsIgnoreCase(userDetails.getCustomSubject().trim())) {
-				subject=userDetails.getCustomSubject();
+			if (userDetails.getCustomSubject() != null && !"".equalsIgnoreCase(userDetails.getCustomSubject())
+					&& !"".equalsIgnoreCase(userDetails.getCustomSubject().trim())) {
+				subject = userDetails.getCustomSubject();
 			}
 			message.setSubject(subject);
 
@@ -172,60 +174,23 @@ public class EmailController {
 
 			MimeBodyPart textPart = new MimeBodyPart();
 
-			
-			
 			try {
+
+
 				
+				URL resumeFilePath = getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf");
+				File resumeFile = new File(resumeFilePath.toURI());
 			
-				
-				//String path = "/" + EmailController.class.getProtectionDomain().getCodeSource().getLocation().getPath()  + "Prakash_Kansurkar_4+.pdf";
-
-				ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-		        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-		        for(URL url: urls){
-		        	System.out.println(url.getFile());
-		        }
-				
-		        
-		        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-		        // Ant-style path matching
-		        Resource[] resources = resolver.getResources("/**");
-
-		        for (Resource resource : resources) {
-		           System.out.println(resource.getDescription());
-		        }
-		        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/CoverLetter_Prakash_Kansurkar.html");
-		        
-		        System.out.println("-------------"+inputStream);
-		        
-		        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		        StringBuilder out = new StringBuilder();
-		        String line;
-		        while ((line = reader.readLine()) != null) {
-		            out.append(line);   // add everything to StringBuilder 
-		          
-		            System.out.println("========="+line);
-
-		        }
-		        
-		        
-				/*File coverLetterFile = new File(classLoader.getResource("CoverLetter_Prakash_Kansurkar.html").getFile());
-
-				String emailBody = readFileAsString(coverLetterFile);
-				emailBody=emailBody.replaceAll("#DATE#", todayDate);
-				emailBody=emailBody.replaceAll("#ORGNAME#", userDetails.getOrgName());
-				emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
-				emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
-				   */
-				//attachmentPart.attachFile(resumeFile);
-				//textPart.setContent(emailBody, "text/html");
-				//textPart.setContent("Hi", "text/html; charset=utf-8");
-
-				//multipart.addBodyPart(textPart);
-				//multipart.addBodyPart(attachmentPart);//
+				  String emailBody = getEmailBodyContent();
+				  emailBody=emailBody.replaceAll("#DATE#", todayDate);
+				  emailBody=emailBody.replaceAll("#ORGNAME#", userDetails.getOrgName());
+				  emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
+				  emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
+				 
+				attachmentPart.attachFile(resumeFile);
+				textPart.setContent(emailBody, "text/html");
+				multipart.addBodyPart(textPart);
+				multipart.addBodyPart(attachmentPart);//
 
 			} catch (IOException e) {
 
@@ -235,8 +200,7 @@ public class EmailController {
 
 			message.setContent(multipart);
 
-			
-			System.out.println("sending..."+userDetails);
+			System.out.println("sending..." + userDetails);
 			// Send message
 			Transport.send(message);
 			System.out.println("Sent message successfully....");
@@ -245,17 +209,22 @@ public class EmailController {
 		}
 
 		return true;
-	
+
 	}
-	private  String readFileAsString(File fileName) throws Exception {
-		String data = "";
-		data = new String(Files.readAllBytes(fileName.toPath()));
-		return data;
-	}
-	
-	private void downloadFile() throws MalformedURLException, IOException {
-		InputStream inputStream = new URL("http://fightcovid.live/Prakash_Kansurkar_3.8_PT.pdf").openStream();
-		FileOutputStream fileOS = new FileOutputStream("/Users/username/Documents/file_name.txt");
-		int i = IOUtils.copy(inputStream, fileOS);
+
+
+	private String getEmailBodyContent() throws IOException {
+		String emailContent = null;
+		InputStream inputStream = getClass().getClassLoader()
+				.getResourceAsStream("/CoverLetter_Prakash_Kansurkar.html");
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			emailContent += line;
+
+		}
+		return emailContent;
+
 	}
 }
