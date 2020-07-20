@@ -1,7 +1,12 @@
 package com.pk.assistant;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,9 +26,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -169,10 +174,17 @@ public class EmailController {
 				
 			
 				
+				//String path = "/" + EmailController.class.getProtectionDomain().getCodeSource().getLocation().getPath()  + "Prakash_Kansurkar_4+.pdf";
+
+				ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+		        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+		        for(URL url: urls){
+		        	System.out.println(url.getFile());
+		        }
 				
-				ClassLoader classLoader = this.getClass().getClassLoader();
-				 
-		        File resumeFile = new File(classLoader.getResource("Prakash_Kansurkar_4+.pdf").getFile());
+		        File resumeFile = new File("");
 				/*File coverLetterFile = new File(classLoader.getResource("CoverLetter_Prakash_Kansurkar.html").getFile());
 
 				String emailBody = readFileAsString(coverLetterFile);
@@ -212,5 +224,11 @@ public class EmailController {
 		String data = "";
 		data = new String(Files.readAllBytes(fileName.toPath()));
 		return data;
+	}
+	
+	private void downloadFile() throws MalformedURLException, IOException {
+		InputStream inputStream = new URL("http://fightcovid.live/Prakash_Kansurkar_3.8_PT.pdf").openStream();
+		FileOutputStream fileOS = new FileOutputStream("/Users/username/Documents/file_name.txt");
+		int i = IOUtils.copy(inputStream, fileOS);
 	}
 }
