@@ -45,7 +45,7 @@
 			<div class="wrap-login100">
 				<form class="login100-form validate-form" id="resultForm" action="/home"
 					id="loginForm" method="post">
-					<span class="login100-form-title p-b-26"> ${result }</span> <span
+					<span > ${result }</span> <span
 						class="login100-form-title p-b-48">
 						<button  id="goBackBtn">
 							<p><u>Click here to start over</u> <i class="zmdi zmdi-directions-bike animated infinite fadeInLeft zmdi-hc-fw"></i> </p>
