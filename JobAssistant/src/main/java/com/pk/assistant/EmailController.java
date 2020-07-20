@@ -175,12 +175,14 @@ public class EmailController {
 				Files.copy(getClass().getClassLoader().getResourceAsStream("/Prakash_Kansurkar_4+.pdf"), temp, StandardCopyOption.REPLACE_EXISTING);
 				//FileInputStream input = new FileInputStream(temp.toFile());
 			
+				System.out.println("Temp FILE Created");
 				  String emailBody = getEmailBodyContent();
 				  emailBody=emailBody.replaceAll("#DATE#", todayDate);
 				  emailBody=emailBody.replaceAll("#ORGNAME#", userDetails.getOrgName());
 				  emailBody=emailBody.replaceAll("#RECNAME#",userDetails.getReciversName());
 				  emailBody=emailBody.replaceAll("#DESIGNATION#",userDetails.getDesignation());
 				 
+				  System.out.println("temp.toFile():==>"+temp.toFile());
 				attachmentPart.attachFile(temp.toFile());
 				textPart.setContent(emailBody, "text/html");
 				multipart.addBodyPart(textPart);
