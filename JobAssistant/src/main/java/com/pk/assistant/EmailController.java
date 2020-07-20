@@ -208,7 +208,7 @@ public class EmailController {
 	        URL[] urls = ((URLClassLoader)cl).getURLs();
 
 	        for(URL url: urls){
-	        	System.out.println(url.getFile());
+	        	System.out.println("**/*"+url.getFile());
 	        }
 			
 			// Send message
