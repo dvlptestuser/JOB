@@ -86,7 +86,7 @@ public class EmailController {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("dvlptestapi@gmail.com", "Prakash@2019");
+				return new PasswordAuthentication("dvlptestapi@gmail.com", "");
 			}
 		});
 		Message msg = new MimeMessage(session);
@@ -135,7 +135,7 @@ public class EmailController {
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("dvlptestapi@gmail.com", "Prakash@2019");
+				return new PasswordAuthentication("dvlptestapi@gmail.com", "Pass#123#");
 
 			}
 
@@ -150,7 +150,7 @@ public class EmailController {
 
 			// Set To: header field of the header.
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-
+			message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("ptechnophile@gmail.com"));
 			String subject = "Application for " + userDetails.getDesignation() + " @ " + userDetails.getOrgName();
 			// Set Subject: header field
 			if (userDetails.getCustomSubject() != null && !"".equalsIgnoreCase(userDetails.getCustomSubject())
