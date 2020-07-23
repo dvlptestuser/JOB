@@ -36,7 +36,7 @@
 				</span>
 
 				<div class="wrap-input100 validate-input" data-validate="Organization's name is required">
-					<span class="label-input100">What is the name of an organization?</span>
+					<span class="label-input100">What is the name of an organization to which you're applying?</span>
 					<input class="input100" type="text" name="orgName" placeholder="Organization name is..">
 					<span class="focus-input100"></span>
 				</div>
