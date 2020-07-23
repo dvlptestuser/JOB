@@ -170,7 +170,7 @@ public class EmailController {
 				//File resumeFile = new File(getClass().getClassLoader().getResource("/Prakash_Kansurkar_4+.pdf").toExternalForm());
 
 				Path temp = Files.createTempFile("temp", ".pdf");
-				Files.copy(getClass().getClassLoader().getResourceAsStream("/Prakash_Kansurkar_4+.pdf"), temp, StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(getClass().getClassLoader().getResourceAsStream("/Prakash_Kansurkar_4_PK.pdf"), temp, StandardCopyOption.REPLACE_EXISTING);
 				//FileInputStream input = new FileInputStream(temp.toFile());
 			
 				  String emailBody = getEmailBodyContent();
