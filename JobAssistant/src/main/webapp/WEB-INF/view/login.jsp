@@ -45,7 +45,7 @@
 			<div class="wrap-login100">
 				<form class="login100-form validate-form" action="/home"
 					id="loginForm" method="post">
-					<span class="login100-form-title p-b-26"> Welcome </span> <span
+					<span class="login100-form-title p-b-26"> Welcome Buddy! </span> <span
 						class="login100-form-title p-b-48">
 						<button class="btn btn-default btn-lg">
 							<i class="zmdi zmdi-settings zmdi-hc-spin"></i>
